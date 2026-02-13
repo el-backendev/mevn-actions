@@ -61,7 +61,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          cname: your-custom-domain.com # optional
+          # cname: your-custom-domain.com  # Uncomment and set your custom domain
           force_orphan: true
 
   deploy-heroku:
