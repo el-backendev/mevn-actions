@@ -15,6 +15,10 @@ This repository provides a set of GitHub Actions workflows tailored for the MEVN
 - **Deploy Workflow**: Deploys your app to Heroku, Render, or GitHub Pages.
 - **Security Workflow**: Runs CodeQL analysis for vulnerabilities in JavaScript and TypeScript.
 
+## 📚 Documentação Adicional
+
+- **[Lista Curada de Actions](./curated-actions.md)**: Catálogo completo de GitHub Actions recomendadas para MEVN, organizadas por domínio (CI, Build, Deploy, Security).
+
 ## Brainstorming Questions
 
 - Why is CI important for small teams as well as large ones?
