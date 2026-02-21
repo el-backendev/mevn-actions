@@ -51,6 +51,10 @@ mevn-actions/
 3. Configure secrets in GitHub repository settings for deployment (e.g., `HEROKU_API_KEY`, `RENDER_API_KEY`).
 4. Push your code and watch the workflows run.
 
+## 📚 Documentação Adicional
+
+- **[Lista Curada de Actions](./curated-actions.md)**: Catálogo completo de GitHub Actions recomendadas para MEVN, organizadas por domínio (CI, Build, Deploy, Security).
+
 ## Brainstorming Questions
 
 - Why is CI important for small teams as well as large ones?
