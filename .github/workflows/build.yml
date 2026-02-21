@@ -2,23 +2,49 @@ name: Build Vue App
 
 on:
   push:
+    branches: [ main, develop ]
+  pull_request:
     branches: [ main ]
 
 jobs:
   build:
+    name: Build Vue Project
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build Vue project
         run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: vue-dist
+          path: dist/
+          retention-days: 7
+
+      - name: Check build size
+        run: |
+          echo "📦 Build size report:"
+          du -sh dist/
+          find dist/ -type f -name "*.js" -exec du -h {} \; | sort -rh | head -10
+
+      - name: Verify build output
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "❌ Build failed: dist folder not found"
+            exit 1
+          fi
+          echo "✅ Build completed successfully"

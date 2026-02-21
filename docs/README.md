@@ -10,10 +10,12 @@ This repository provides a set of GitHub Actions workflows tailored for the MEVN
 
 ## Included Workflows
 
-- **CI Pipeline**: Runs ESLint and tests on every push/PR.
-- **Build Workflow**: Compiles the Vue frontend automatically.
-- **Deploy Workflow**: Deploys your app to Heroku, Render, or GitHub Pages.
-- **Security Workflow**: Runs CodeQL analysis for vulnerabilities in JavaScript and TypeScript.
+All workflows have been optimized with modern GitHub Actions best practices:
+
+- **CI Pipeline**: Runs ESLint with automated PR comments and tests with coverage on Node 18, 20, 22
+- **Build Workflow**: Compiles the Vue frontend with caching, validation, and artifact uploads
+- **Deploy Workflow**: Deploys to GitHub Pages, Heroku, and Render with build artifact reuse
+- **Security Workflow**: 4-layer security analysis (CodeQL, Snyk, npm audit, OpenSSF Scorecard)
 
 ## Brainstorming Questions
 
@@ -26,9 +28,11 @@ This repository provides a set of GitHub Actions workflows tailored for the MEVN
 
 ## Getting Started
 
-1. Copy the workflows into your project.
-2. Configure secrets (e.g., `HEROKU_API_KEY`, `RENDER_API_KEY`).
-3. Push your code and watch the workflows run.
+1. Copy the workflows into your project's `.github/workflows` directory.
+2. Configure required secrets and variables (see [Configuration Guide](CONFIGURATION.md)).
+3. Push your code and watch the optimized workflows run.
+
+For detailed configuration instructions, troubleshooting, and customization options, see the **[Configuration Guide](CONFIGURATION.md)**.
 
 ---
 
