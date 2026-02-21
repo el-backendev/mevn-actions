@@ -1,8 +1,12 @@
 name: Deploy Workflow
 
+# This workflow is manual-only to avoid failures when secrets are not configured.
+# Configure the required secrets before enabling automatic triggers:
+#   - HEROKU_API_KEY: Heroku API key
+#   - RENDER_API_KEY: Render API key
+#   - GITHUB_TOKEN: Automatically provided by GitHub Actions
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -10,19 +14,31 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v5
         with:
-          node-version: '18'
+          node-version: '20'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            client/node_modules
+            server/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
 
       - name: Install dependencies
         run: npm install
 
       # Example: Deploy to Heroku
+      # Requires HEROKU_API_KEY secret to be configured
       - name: Deploy to Heroku
-        if: github.ref == 'refs/heads/main'
+        if: false
         uses: akhileshns/heroku-deploy@v3.14.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
@@ -30,8 +46,9 @@ jobs:
           heroku_email: "your-email@example.com"
 
       # Example: Deploy to Render
+      # Requires RENDER_API_KEY secret to be configured
       - name: Deploy to Render
-        if: github.ref == 'refs/heads/main'
+        if: false
         run: |
           curl -X POST \
           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
@@ -43,7 +60,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./client/dist
